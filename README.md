@@ -378,15 +378,6 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 - **Inspiration**: Nintendo's Official Pokédex
 
 ---
-
-## 📞 Contact
-
-Your Name - [@yourusername](https://twitter.com/yourusername)
-
-Project Link: [https://github.com/yourusername/pokemon-dashboard](https://github.com/yourusername/pokemon-dashboard)
-
----
-
 <div align="center">
 
 **Made with ❤️ and ⚡ by Pokemon Fans**
