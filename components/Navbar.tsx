@@ -3,6 +3,7 @@
 import { Search, Shuffle, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { capitalizeFirstLetter } from '@/lib/colors';
+import { usePokemonStore } from '@/store/pokemonStore';
 
 interface NavbarProps {
   siblings?: {
@@ -15,10 +16,16 @@ interface NavbarProps {
 }
 
 export default function Navbar({ siblings, onPokemonChange, onShuffle }: NavbarProps) {
+  const { filters, setSearchQuery } = usePokemonStore();
+
   const handleNavClick = (id: number) => {
     if (onPokemonChange) {
       onPokemonChange(id);
     }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -36,6 +43,8 @@ export default function Navbar({ siblings, onPokemonChange, onShuffle }: NavbarP
             <input
               type="text"
               placeholder="Search Pokémon..."
+              value={filters.searchQuery}
+              onChange={handleSearchChange}
               className="bg-transparent text-white placeholder-white/50 outline-none w-48 text-sm"
             />
           </div>

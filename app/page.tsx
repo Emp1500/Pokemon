@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import PokemonCard from '@/components/PokemonCard';
@@ -10,33 +10,75 @@ import NavigationArrow from '@/components/NavigationArrow';
 import { mockPokemonList } from '@/lib/mockData';
 import { getTypeColor } from '@/lib/colors';
 import { Pokemon } from '@/types/pokemon';
+import { usePokemonStore } from '@/store/pokemonStore';
+import { pokemonService } from '@/lib/pokemonService';
 
 export default function Home() {
+  const { allPokemon, filteredPokemon, setAllPokemon, isLoading, setLoading, setError } = usePokemonStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentPokemon, setCurrentPokemon] = useState<Pokemon>(mockPokemonList[0]);
   const [direction, setDirection] = useState(0);
 
+  // Load Pokemon data on mount
+  useEffect(() => {
+    const loadPokemon = async () => {
+      setLoading(true);
+      try {
+        // Start with mock data for instant display
+        setAllPokemon(mockPokemonList);
+
+        // Load Generation 1 (Kanto) Pokemon in the background
+        const gen1 = await pokemonService.fetchRange(1, 151);
+        setAllPokemon(gen1);
+
+        // Optionally load more generations in the background
+        Promise.all([
+          pokemonService.fetchRange(152, 251), // Gen 2
+          // Add more generations as needed
+        ]).then((generations) => {
+          const allGen = [...gen1, ...generations.flat()];
+          setAllPokemon(allGen);
+        }).catch(err => {
+          console.error('Error loading additional generations:', err);
+        });
+      } catch (error) {
+        console.error('Error loading Pokemon:', error);
+        setError('Failed to load Pokemon data. Using cached data.');
+        // Keep using mock data on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPokemon();
+  }, [setAllPokemon, setLoading, setError]);
+
+  // Use filtered Pokemon list
+  const pokemonList = filteredPokemon();
+
   const handlePokemonChange = (id: number) => {
-    const newIndex = mockPokemonList.findIndex((p) => p.id === id);
+    const newIndex = pokemonList.findIndex((p) => p.id === id);
     if (newIndex !== -1) {
       setDirection(newIndex > currentIndex ? 1 : -1);
       setCurrentIndex(newIndex);
-      setCurrentPokemon(mockPokemonList[newIndex]);
+      setCurrentPokemon(pokemonList[newIndex]);
     }
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % mockPokemonList.length;
+    if (pokemonList.length === 0) return;
+    const newIndex = (currentIndex + 1) % pokemonList.length;
     setDirection(1);
     setCurrentIndex(newIndex);
-    setCurrentPokemon(mockPokemonList[newIndex]);
+    setCurrentPokemon(pokemonList[newIndex]);
   };
 
   const handleShuffle = () => {
-    const randomIndex = Math.floor(Math.random() * mockPokemonList.length);
+    if (pokemonList.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * pokemonList.length);
     setDirection(randomIndex > currentIndex ? 1 : -1);
     setCurrentIndex(randomIndex);
-    setCurrentPokemon(mockPokemonList[randomIndex]);
+    setCurrentPokemon(pokemonList[randomIndex]);
   };
 
   const typeColors = getTypeColor(currentPokemon.type);

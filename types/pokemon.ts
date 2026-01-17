@@ -24,11 +24,16 @@ export interface PokemonStat {
   maxValue?: number;
 }
 
+export type Region = 'kanto' | 'johto' | 'hoenn' | 'sinnoh' | 'unova' | 'kalos' | 'alola' | 'galar' | 'paldea';
+export type LegendaryStatus = 'normal' | 'legendary' | 'mythical' | 'ultra-beast';
+
 export interface Pokemon {
   id: number;
   name: string;
   type: PokemonType;
   types: PokemonType[];
+  generation?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  region?: Region;
   height: number; // in meters
   weight: number; // in kg
   abilities: string[];
@@ -41,6 +46,14 @@ export interface Pokemon {
     speed: number;
   };
   imageUrl: string;
+  sprites?: {
+    normal: string;
+    shiny?: string;
+    artwork?: string;
+  };
+  legendaryStatus?: LegendaryStatus;
+  searchTerms?: string[]; // Pre-computed for search optimization
+  evolutionChain?: number[]; // IDs of related Pokemon
   siblings?: {
     prev?: { id: number; name: string };
     current: { id: number; name: string };
