@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import PokemonCard from '@/components/PokemonCard';
+import PokemonDescription from '@/components/PokemonDescription';
 import StatsSection from '@/components/StatsSection';
 import Sidebar from '@/components/Sidebar';
 import NavigationArrow from '@/components/NavigationArrow';
@@ -27,24 +28,32 @@ export default function Home() {
         // Start with mock data for instant display
         setAllPokemon(mockPokemonList);
 
-        // Load Generation 1 (Kanto) Pokemon in the background
+        // Load Generation 1 (Kanto) Pokemon first for quick display
         const gen1 = await pokemonService.fetchRange(1, 151);
         setAllPokemon(gen1);
 
-        // Optionally load more generations in the background
-        Promise.all([
-          pokemonService.fetchRange(152, 251), // Gen 2
-          // Add more generations as needed
-        ]).then((generations) => {
-          const allGen = [...gen1, ...generations.flat()];
-          setAllPokemon(allGen);
-        }).catch(err => {
-          console.error('Error loading additional generations:', err);
-        });
+        // Load all remaining generations progressively
+        // This prevents the app from hanging and allows caching
+        const allGenerations = await Promise.all([
+          pokemonService.fetchRange(152, 251),  // Gen 2 - Johto
+          pokemonService.fetchRange(252, 386),  // Gen 3 - Hoenn
+          pokemonService.fetchRange(387, 493),  // Gen 4 - Sinnoh
+          pokemonService.fetchRange(494, 649),  // Gen 5 - Unova
+          pokemonService.fetchRange(650, 721),  // Gen 6 - Kalos
+          pokemonService.fetchRange(722, 809),  // Gen 7 - Alola
+          pokemonService.fetchRange(810, 905),  // Gen 8 - Galar
+          pokemonService.fetchRange(906, 1025), // Gen 9 - Paldea
+        ]);
+
+        // Combine all Pokemon from all generations
+        const allPokemon = [...gen1, ...allGenerations.flat()];
+        setAllPokemon(allPokemon);
+
+        console.log(`Loaded ${allPokemon.length} Pokemon from all 9 generations!`);
       } catch (error) {
         console.error('Error loading Pokemon:', error);
         setError('Failed to load Pokemon data. Using cached data.');
-        // Keep using mock data on error
+        // Keep using whatever data we've loaded so far
       } finally {
         setLoading(false);
       }
@@ -102,6 +111,21 @@ export default function Home() {
     <div
       className="min-h-screen w-full relative overflow-hidden bg-black"
     >
+      {/* Loading Indicator */}
+      {isLoading && allPokemon.length < 1025 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed top-20 right-8 z-50 px-4 py-2 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20 text-white text-sm"
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <span>Loading Pokemon... {allPokemon.length}/1025</span>
+          </div>
+        </motion.div>
+      )}
+
       {/* Animated Background Gradient Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -160,6 +184,13 @@ export default function Home() {
             }}
           >
             <PokemonCard pokemon={currentPokemon} />
+            <PokemonDescription
+              category={currentPokemon.category}
+              description={currentPokemon.description}
+              generation={currentPokemon.generation}
+              region={currentPokemon.region}
+              legendaryStatus={currentPokemon.legendaryStatus}
+            />
             <StatsSection stats={currentPokemon.stats} />
           </motion.div>
         </AnimatePresence>

@@ -85,6 +85,20 @@ export class PokemonService {
       const speciesResponse = await fetch(data.species.url);
       const speciesData = await speciesResponse.json();
 
+      // Extract English flavor text (description)
+      const englishFlavorText = speciesData.flavor_text_entries?.find(
+        (entry: any) => entry.language.name === 'en'
+      );
+      const description = englishFlavorText
+        ? englishFlavorText.flavor_text.replace(/\f/g, ' ').replace(/\n/g, ' ')
+        : 'A mysterious Pokemon with unique characteristics.';
+
+      // Extract category (genus)
+      const englishGenus = speciesData.genera?.find(
+        (genus: any) => genus.language.name === 'en'
+      );
+      const category = englishGenus ? englishGenus.genus : 'Unknown Pokemon';
+
       // Transform API response to our Pokemon interface
       const pokemon: Pokemon = {
         id: data.id,
@@ -110,8 +124,10 @@ export class PokemonService {
         },
         generation: this.getGeneration(data.id),
         region: this.getRegion(data.id),
-        legendaryStatus: speciesData.is_legendary ? 'legendary' : 
+        legendaryStatus: speciesData.is_legendary ? 'legendary' :
                         speciesData.is_mythical ? 'mythical' : 'normal',
+        description,
+        category,
         searchTerms: this.generateSearchTerms(data.name, data.types),
       };
 

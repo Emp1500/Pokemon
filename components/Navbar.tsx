@@ -1,7 +1,7 @@
 'use client';
 
-import { Search, Shuffle, ChevronDown } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Search, Shuffle, ChevronDown, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { capitalizeFirstLetter } from '@/lib/colors';
 import { usePokemonStore } from '@/store/pokemonStore';
 
@@ -16,7 +16,11 @@ interface NavbarProps {
 }
 
 export default function Navbar({ siblings, onPokemonChange, onShuffle }: NavbarProps) {
-  const { filters, setSearchQuery } = usePokemonStore();
+  const { filters, setSearchQuery, filteredPokemon, allPokemon } = usePokemonStore();
+  const filtered = filteredPokemon();
+  const resultsCount = filtered.length;
+  const totalCount = allPokemon.length;
+  const hasSearch = filters.searchQuery.trim().length > 0;
 
   const handleNavClick = (id: number) => {
     if (onPokemonChange) {
@@ -26,6 +30,10 @@ export default function Navbar({ siblings, onPokemonChange, onShuffle }: NavbarP
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
   };
 
   return (
@@ -47,7 +55,30 @@ export default function Navbar({ siblings, onPokemonChange, onShuffle }: NavbarP
               onChange={handleSearchChange}
               className="bg-transparent text-white placeholder-white/50 outline-none w-48 text-sm"
             />
+            <AnimatePresence>
+              {hasSearch && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  onClick={clearSearch}
+                  className="hover:bg-white/10 rounded-full p-1 transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4 text-white/60 hover:text-white" />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
+          {hasSearch && (
+            <motion.div
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute top-full mt-2 left-0 px-3 py-1 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20 text-xs text-white/70"
+            >
+              {resultsCount} result{resultsCount !== 1 ? 's' : ''} found
+            </motion.div>
+          )}
         </div>
 
         <button

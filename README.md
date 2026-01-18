@@ -358,7 +358,7 @@ Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for 
 
 ## 🐛 Issues
 
-Found a bug? Have a feature request? Please [open an issue](https://github.com/yourusername/pokemon-dashboard/issues).
+Found a bug? Have a feature request? Please [open an issue](https://github.com/Emp1500/pokemon/issues).
 
 ---
 
@@ -385,3 +385,4 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 ⭐ Star this repo if you like it!
 
 </div>
+

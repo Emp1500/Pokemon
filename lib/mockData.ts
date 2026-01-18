@@ -17,6 +17,11 @@ export const mockPokemon: Pokemon = {
     speed: 45,
   },
   imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
+  description: 'A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokemon.',
+  category: 'Seed Pokemon',
+  generation: 1,
+  region: 'kanto',
+  legendaryStatus: 'normal',
   siblings: {
     prev: { id: 151, name: 'Mew' },
     current: { id: 1, name: 'Bulbasaur' },

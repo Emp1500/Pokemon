@@ -52,6 +52,8 @@ export interface Pokemon {
     artwork?: string;
   };
   legendaryStatus?: LegendaryStatus;
+  description?: string; // Pokemon lore/flavor text
+  category?: string; // e.g., "Seed Pokemon", "Flame Pokemon"
   searchTerms?: string[]; // Pre-computed for search optimization
   evolutionChain?: number[]; // IDs of related Pokemon
   siblings?: {

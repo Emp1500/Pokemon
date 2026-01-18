@@ -109,21 +109,46 @@ export const usePokemonStore = create<PokemonStore>((set, get) => ({
 
     // Apply search filter
     if (filters.searchQuery) {
-      const query = filters.searchQuery.toLowerCase();
-      
-      // Check if searching by number (#025 or 25)
+      const query = filters.searchQuery.toLowerCase().trim();
+
+      // Check if searching by number (#025 or 25 or just "25")
       const numberMatch = query.match(/^#?(\d+)$/);
       if (numberMatch) {
         const id = parseInt(numberMatch[1]);
         results = results.filter((p) => p.id === id);
-      } else {
-        // Text search
-        results = results.filter(
-          (p) =>
-            p.name.toLowerCase().includes(query) ||
-            p.types.some((t) => t.toLowerCase().includes(query)) ||
-            p.abilities.some((a) => a.toLowerCase().includes(query))
-        );
+      }
+      // Check if searching by partial ID (e.g., "1" matches 1, 10, 100, 1000, etc.)
+      else if (/^\d+$/.test(query)) {
+        const searchId = query;
+        results = results.filter((p) => p.id.toString().includes(searchId));
+      }
+      // Text search - improved to handle partial matches
+      else {
+        results = results.filter((p) => {
+          // Check name (most important)
+          if (p.name.toLowerCase().includes(query)) return true;
+
+          // Check types
+          if (p.types.some((t) => t.toLowerCase().includes(query))) return true;
+
+          // Check abilities
+          if (p.abilities?.some((a) => a.toLowerCase().includes(query))) return true;
+
+          // Check region
+          if (p.region?.toLowerCase().includes(query)) return true;
+
+          // Check generation (e.g., "gen 1" or "generation 1")
+          if (p.generation && (
+            query.includes(`gen ${p.generation}`) ||
+            query.includes(`generation ${p.generation}`) ||
+            query === `${p.generation}`
+          )) return true;
+
+          // Check legendary status
+          if (p.legendaryStatus && p.legendaryStatus.toLowerCase().includes(query)) return true;
+
+          return false;
+        });
       }
     }
 
