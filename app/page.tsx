@@ -28,32 +28,29 @@ export default function Home() {
         // Start with mock data for instant display
         setAllPokemon(mockPokemonList);
 
-        // Load Generation 1 (Kanto) Pokemon first for quick display
-        const gen1 = await pokemonService.fetchRange(1, 151);
-        setAllPokemon(gen1);
+        const generations = [
+          { start: 1, end: 151 },   // Gen 1 - Kanto
+          { start: 152, end: 251 }, // Gen 2 - Johto
+          { start: 252, end: 386 }, // Gen 3 - Hoenn
+          { start: 387, end: 493 }, // Gen 4 - Sinnoh
+          { start: 494, end: 649 }, // Gen 5 - Unova
+          { start: 650, end: 721 }, // Gen 6 - Kalos
+          { start: 722, end: 809 }, // Gen 7 - Alola
+          { start: 810, end: 905 }, // Gen 8 - Galar
+          { start: 906, end: 1025 },// Gen 9 - Paldea
+        ];
 
-        // Load all remaining generations progressively
-        // This prevents the app from hanging and allows caching
-        const allGenerations = await Promise.all([
-          pokemonService.fetchRange(152, 251),  // Gen 2 - Johto
-          pokemonService.fetchRange(252, 386),  // Gen 3 - Hoenn
-          pokemonService.fetchRange(387, 493),  // Gen 4 - Sinnoh
-          pokemonService.fetchRange(494, 649),  // Gen 5 - Unova
-          pokemonService.fetchRange(650, 721),  // Gen 6 - Kalos
-          pokemonService.fetchRange(722, 809),  // Gen 7 - Alola
-          pokemonService.fetchRange(810, 905),  // Gen 8 - Galar
-          pokemonService.fetchRange(906, 1025), // Gen 9 - Paldea
-        ]);
+        let loadedPokemon: Pokemon[] = [];
+        for (const gen of generations) {
+          const pokemon = await pokemonService.fetchRange(gen.start, gen.end);
+          loadedPokemon = [...loadedPokemon, ...pokemon];
+          setAllPokemon(loadedPokemon);
+        }
 
-        // Combine all Pokemon from all generations
-        const allPokemon = [...gen1, ...allGenerations.flat()];
-        setAllPokemon(allPokemon);
-
-        console.log(`Loaded ${allPokemon.length} Pokemon from all 9 generations!`);
+        console.log(`Loaded ${loadedPokemon.length} Pokemon from all 9 generations!`);
       } catch (error) {
         console.error('Error loading Pokemon:', error);
         setError('Failed to load Pokemon data. Using cached data.');
-        // Keep using whatever data we've loaded so far
       } finally {
         setLoading(false);
       }

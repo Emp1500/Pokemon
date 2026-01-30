@@ -1,16 +1,36 @@
-# 🎮 Pokémon Dashboard (Pokédex)
-
 <div align="center">
 
-![Pokemon](https://img.shields.io/badge/Pokémon-FFCB05?style=for-the-badge&logo=pokemon&logoColor=black)
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+# 🎮 Pokémon Dashboard (Pokédex)
 
 A modern, highly aesthetic, and responsive Pokémon Details Dashboard built with React, Next.js, Tailwind CSS, and Framer Motion. Features a clean, minimalist design with dynamic color theming based on Pokémon types.
 
-[Features](#-features) • [Demo](#-demo) • [Installation](#-installation) • [Documentation](#-documentation) • [Roadmap](#-roadmap)
+</div>
+
+<p align="center">
+  <a href="https://github.com/Emp1500/pokemon/stargazers">
+    <img src="https://img.shields.io/github/stars/Emp1500/pokemon?style=for-the-badge&logo=github&color=FFCB05&logoColor=black" alt="Stars">
+  </a>
+  <a href="https://github.com/Emp1500/pokemon/network/members">
+    <img src="https://img.shields.io/github/forks/Emp1500/pokemon?style=for-the-badge&logo=github&color=FFCB05&logoColor=black" alt="Forks">
+  </a>
+  <a href="https://github.com/Emp1500/pokemon/issues">
+    <img src="https://img.shields.io/github/issues/Emp1500/pokemon?style=for-the-badge&logo=github&color=FFCB05&logoColor=black" alt="Issues">
+  </a>
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/Emp1500/pokemon?style=for-the-badge&color=FFCB05&logoColor=black" alt="License">
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion">
+</p>
+
+<div align="center">
+
+[Features](#-features) • [Demo](#-demo) • [Installation](#-installation)
 
 </div>
 
@@ -28,23 +48,26 @@ A modern, highly aesthetic, and responsive Pokémon Details Dashboard built with
 - 🎭 **Floating Pokémon**: Subtle floating animation for Pokémon images
 - 🎲 **Random Shuffle**: Discover random Pokémon with one click
 
-### Planned Features (In Development)
-- 🔍 **Advanced Search**: Real-time search with fuzzy matching and autocomplete
-- 🎯 **Smart Filters**: Filter by type, generation, region, stats, and more
-- 📚 **Complete Pokédex**: All 1000+ Pokémon from all 9 generations
-- ⚡ **Performance Optimized**: Virtual scrolling and intelligent caching
-- 🌐 **Offline Support**: Progressive Web App with offline capabilities
-- 📈 **Stat Comparisons**: Compare multiple Pokémon side-by-side
 
-See the [Roadmap](#-roadmap) section for detailed development plans.
+
 
 ---
 
 ## 🚀 Demo
 
-> Add screenshots or GIF demo here
+<div align="center">
+    <img src="./screenshots/1.png" alt="screenshot-1" width="80%">
+    <br/>
+    <br/>
+    <img src="./screenshots/2.png" alt="screenshot-2" width="80%">
+    <br/>
+    <br/>
+    <img src="./screenshots/3.png" alt="screenshot-3" width="80%">
+    <br/>
+    <br/>
+    <img src="./screenshots/4.png" alt="screenshot-4" width="80%">
+</div>
 
-**Live Demo**: [Coming Soon]
 
 ---
 
@@ -73,8 +96,8 @@ See the [Roadmap](#-roadmap) section for detailed development plans.
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/pokemon-dashboard.git
-cd pokemon-dashboard
+git clone https://github.com/Emp1500/Pokemon.git
+cd Pokemon
 ```
 
 2. **Install dependencies**
@@ -106,109 +129,9 @@ npm run build
 npm start
 ```
 
----
 
-## 📁 Project Structure
 
-```
-Pokemon/
-├── app/                         # Next.js app directory
-│   ├── layout.tsx              # Root layout with metadata
-│   ├── page.tsx                # Home page with main logic
-│   └── globals.css             # Global styles
-│
-├── components/                  # React components
-│   ├── Navbar.tsx              # Top navigation with search
-│   ├── PokemonCard.tsx         # Main Pokémon display card
-│   ├── StatsBar.tsx            # Individual animated stat bar
-│   ├── StatsSection.tsx        # Stats container component
-│   ├── Sidebar.tsx             # Social links sidebar
-│   └── NavigationArrow.tsx     # Next Pokémon button
-│
-├── lib/                         # Utility functions & services
-│   ├── colors.ts               # Type colors and utilities
-│   └── mockData.ts             # Mock Pokémon data
-│
-├── types/                       # TypeScript type definitions
-│   └── pokemon.ts              # Pokémon interfaces
-│
-├── docs/                        # Documentation (see below)
-│   ├── POKEMON_INTEGRATION_PLAN.md
-│   ├── QUICK_START_GUIDE.md
-│   └── ARCHITECTURE_OVERVIEW.md
-│
-├── assets/                      # Static assets
-│   ├── icons/                  # Type icons (SVG)
-│   └── pokemon/                # Pokémon sprites (PNG)
-│
-├── public/                      # Public static files
-├── node_modules/               # Dependencies (gitignored)
-├── .next/                      # Next.js build output (gitignored)
-│
-├── tailwind.config.ts          # Tailwind configuration
-├── tsconfig.json               # TypeScript configuration
-├── next.config.js              # Next.js configuration
-├── postcss.config.js           # PostCSS configuration
-├── package.json                # Project dependencies
-├── .gitignore                  # Git ignore rules
-└── README.md                   # This file
-```
 
----
-
-## 🎯 Component Architecture
-
-### Core Components
-
-#### 1. **Navbar** (`components/Navbar.tsx`)
-- Search bar with real-time filtering
-- Pokémon sibling navigation (prev/next)
-- Filter dropdown (coming soon)
-- Random shuffle button
-
-#### 2. **PokemonCard** (`components/PokemonCard.tsx`)
-- Hero section with Pokémon image
-- Name, ID, and type badges
-- Height, weight, and abilities
-- Dynamic background based on type
-- Floating animation effect
-
-#### 3. **StatsSection** (`components/StatsSection.tsx`)
-- Container for all stat bars
-- Grid layout for organized display
-- Animated entrance effects
-
-#### 4. **StatsBar** (`components/StatsBar.tsx`)
-- Individual stat progress bar
-- Animated fill from 0 to value
-- Color-coded based on stat value
-- Label and numeric value display
-
-#### 5. **Sidebar** (`components/Sidebar.tsx`)
-- Fixed position social links
-- GitHub and website links
-- Glassmorphism styling
-
-#### 6. **NavigationArrow** (`components/NavigationArrow.tsx`)
-- Floating next button
-- Animated hover effects
-- Smooth transitions
-
-### Data Flow
-
-```
-User Interaction
-      ↓
-Navbar/Navigation Component
-      ↓
-State Update (useState)
-      ↓
-PokemonCard & StatsSection Re-render
-      ↓
-Framer Motion Animations
-      ↓
-Updated UI Display
-```
 
 ---
 
@@ -275,70 +198,18 @@ module.exports = {
 };
 ```
 
----
-
-## 📚 Documentation
-
-Comprehensive documentation for the upcoming search and filter system:
-
-### Planning Documents
-
-| Document | Description | Audience |
-|----------|-------------|----------|
-| [**POKEMON_INTEGRATION_PLAN.md**](./POKEMON_INTEGRATION_PLAN.md) | Complete implementation strategy for integrating all 1000+ Pokémon with advanced search and filter | Developers, Project Managers |
-| [**QUICK_START_GUIDE.md**](./QUICK_START_GUIDE.md) | Step-by-step implementation guide with code snippets | Developers |
-| [**ARCHITECTURE_OVERVIEW.md**](./ARCHITECTURE_OVERVIEW.md) | System architecture, data flow diagrams, and technical deep dive | Architects, Senior Developers |
-
-### Key Topics Covered
-
-- **Data Architecture**: Static, API, and Hybrid data loading strategies
-- **Search Algorithms**: Multi-stage search with fuzzy matching, trigrams, and Levenshtein distance
-- **Filter System**: Advanced filtering with indices and set operations
-- **Performance**: Caching strategies, virtual scrolling, Web Workers
-- **Implementation**: 5-week roadmap with detailed phases
 
 ---
 
-## 🗺️ Roadmap
+## Disclaimer
 
-### Phase 1: Core Enhancement ✅ (Current)
-- [x] Basic Pokémon display with animations
-- [x] Type-based theming
-- [x] Navigation between Pokémon
-- [x] Responsive design
+This is a fan-made project and is not affiliated with Nintendo or The Pokémon Company. All Pokémon-related content, including names, images, and data, is the property of Nintendo and The Pokémon Company.
 
-### Phase 2: Data Integration 🚧 (In Planning)
-- [ ] Integrate PokeAPI for real data
-- [ ] Load all 1000+ Pokémon
-- [ ] Implement caching strategy
-- [ ] Add generation/region data
+---
 
-### Phase 3: Search & Discovery 📋 (Planned)
-- [ ] Real-time search with autocomplete
-- [ ] Fuzzy search with typo tolerance
-- [ ] Search by name, number, type, ability
-- [ ] Search history and suggestions
+## How to Get Help
 
-### Phase 4: Advanced Filtering 📋 (Planned)
-- [ ] Filter by type (multi-select)
-- [ ] Filter by generation/region
-- [ ] Filter by stats (ranges)
-- [ ] Filter by legendary/mythical status
-- [ ] Sort options (ID, name, stats)
-
-### Phase 5: Performance & UX 📋 (Planned)
-- [ ] Virtual scrolling for large lists
-- [ ] Lazy loading and code splitting
-- [ ] Offline support (PWA)
-- [ ] Loading states and error handling
-
-### Phase 6: Advanced Features 💡 (Future)
-- [ ] Compare Pokémon side-by-side
-- [ ] Team builder
-- [ ] Favorite Pokémon list
-- [ ] Evolution chain visualization
-- [ ] Move and ability details
-- [ ] Type effectiveness calculator
+If you have any questions or need help with the project, please [open an issue](https://github.com/Emp1500/pokemon/issues).
 
 ---
 
@@ -380,9 +251,8 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 ---
 <div align="center">
 
-**Made with ❤️ and ⚡ by Pokemon Fans**
+**Made with ❤️ and ⚡ by Pokemon Fan**
 
 ⭐ Star this repo if you like it!
 
 </div>
-
